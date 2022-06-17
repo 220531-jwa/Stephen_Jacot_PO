@@ -18,7 +18,7 @@ public class Bank_Demo {
 		
 		Javalin app = Javalin.create();
 		
-		app.start(9);
+		app.start(9400);
 		
 		app.routes(() -> {
 			path("/clients", () -> {
@@ -28,6 +28,16 @@ public class Bank_Demo {
 				get(ClientController::getClientById);
 				delete(ClientController::deleteClient);
 				put(ClientController::updateClient);
+				path("/accounts", () -> {
+					post(AccountController::createNewAccount);
+					get(AccountController::getAllAccounts);
+				path("/{account_number}", () -> {
+					get(AccountController::getAccountByID);
+					put(AccountController::accountUpdates);
+					delete(AccountController::deleteClientAccount);
+					
+				});
+				});
 				});
 			});
 		});
@@ -35,7 +45,7 @@ public class Bank_Demo {
 		app.exception(Exception.class, (e,ctx) -> {
 			ctx.status(404);
 			
-			ctx.result("Client not found");
+			ctx.result("not found");
 			
 			
 		});

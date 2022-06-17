@@ -128,9 +128,9 @@ public class ClientDAO
 		return null;
 	}
 	
-	public void updateClient(Client c)
+	public boolean updateClient(Client c)
 	{
-		String sql = "update clients set first_name = ?, last_name = ?, username = ?, where id = ?";
+		String sql = "update clients" + " set first_name = ?, last_name = ?, username = ?" + " where id = ?";
 		
 		try(Connection conn = cu.getConnection())
 		{
@@ -143,16 +143,24 @@ public class ClientDAO
 			
 			ps.executeUpdate();
 			
+			if(ps.executeUpdate() != 0)
+			{
+				return true;
+			}
 			
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
+		
+		return false;
 	}
 	
-	public Client deleteClient(int id)
+	public boolean deleteClient(int id)
 	{
 		String sql = "delete from clients where id = ?";
+		
+		boolean succeeded = true;
 		
 		try (Connection conn = cu.getConnection())
 		{
@@ -160,14 +168,19 @@ public class ClientDAO
 			
 			ps.setInt(1, id);
 			
-			ps.execute();
+			int change = ps.executeUpdate();
+			
+			if(change == 0)
+			{
+				succeeded = false;
+			}
 			
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
 		
-		return null;
+		return succeeded;
 	}
 
 }

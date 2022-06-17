@@ -3,30 +3,59 @@ package dev.jacot.models;
 public class Account 
 {
 	
-	private double balance;
-	
+	private float clientCheckingBalance;
+	private float clientSavingBalance;
 	private int accountNumber;
-
-	public double getBalance() 
+	private int clientId;
+	
+	public Account()
 	{
-		return balance;
+		super();
+	}
+	
+	public Account(int accountNumber,int clientId, float checkingBalance, float savingBalance) {
+		super();
+		this.clientCheckingBalance = checkingBalance;
+		this.accountNumber = accountNumber;
+		this.clientSavingBalance = savingBalance;
+		this.clientId = clientId;
 	}
 
-	public void setBalance(double balance) 
-	{
-		this.balance = balance;
+	public float getClientCheckingBalance() {
+		return clientCheckingBalance;
 	}
 
-	public int getAccountNumber() 
-	{
+	public void setClientCheckingBalance(float clientCheckingBalance) {
+		this.clientCheckingBalance = clientCheckingBalance;
+	}
+
+	public float getClientSavingBalance() {
+		return clientSavingBalance;
+	}
+
+	public void setClientSavingBalance(float clientSavingBalance) {
+		this.clientSavingBalance = clientSavingBalance;
+	}
+
+	public int getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(int accountNumber) 
-	{
+	public void setAccountNumber(int accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 	
+	public int getClientId()
+	{
+		return clientId;
+	}
+	
+	public void setClientId(int clientId)
+	{
+		this.clientId = clientId;
+	}
+
+
 	
 	
 	

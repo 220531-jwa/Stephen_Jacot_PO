@@ -42,25 +42,26 @@ public class ClientService
 		return cd.getClientByID(id);
 	}
 
-	public void deleteClient(int id) throws Exception
+	public boolean deleteClient(int id)
 	{
-		
-		Client c = cd.getClientByID(id);
-		
-		if(c == null)
+		if(id >= 0)
 		{
-			throw new Exception("User not found");
+			return cd.deleteClient(id);
 		}
 		
-		cd.deleteClient(id);
+		return false;
 		
 	}
 
-	public void updateClient(Client cChange) 
+	public boolean updateClient(Client cChange) 
 	{
-	
-		cd.updateClient(cChange);		
+		if(cChange != null)
+		{
+			return cd.updateClient(cChange);
+		}
 		
+		
+		return false;	
 	}
 	
 	// create a new client and check that client doesn't exist

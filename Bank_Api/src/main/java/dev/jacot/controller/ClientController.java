@@ -39,36 +39,59 @@ public class ClientController
 		
 		try {
 			c = cs.getClientById(id);
+			
+			ctx.status(200);
+			
+			ctx.json(c);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ctx.status(404);
+			
+			ctx.result("Client not found");
+			
+			//e.printStackTrace();
 		}
 		
-		ctx.json(c);
+		
 	}
 	
 	public static void deleteClient(Context ctx)
 	{
 		int id = Integer.parseInt(ctx.pathParam("id"));
 		
-		Client c = null;
+		boolean succeeded = cs.deleteClient(id);
 		
-		try {
-			cs.deleteClient(id);
+		if(!succeeded)
+		{
+			ctx.status(404);
+		}
+		else
+		{
 			ctx.status(205);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		
-		ctx.json(c);
+		//ctx.json(c);
 		
 	}
 	
 	public static void updateClient(Context ctx)
 	{
-		Client cChange = ctx.bodyAsClass(Client.class); //unmarshalling
-		cs.updateClient(cChange);
+		int id = Integer.parseInt(ctx.pathParam("id"));
+		
+		Client cChange = ctx.bodyAsClass(Client.class);//unmarshalling
+		
+		cChange.setId(id);
+		
+		boolean success = cs.updateClient(cChange);
+		
+		if(!success)
+		{
+			ctx.status(404);
+		}
+		else
+		{
+			ctx.status(205);
+		}
 	}
 
 }
